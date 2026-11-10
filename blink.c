@@ -1,0 +1,42 @@
+/**
+ * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#include "pico/stdlib.h"
+#include <stdio.h>
+#include "tester.h"
+// Pico W devices use a GPIO on the WIFI chip for the LED,
+// so when building for Pico W, CYW43_WL_GPIO_LED_PIN will be defined
+
+#ifndef LED_DELAY_MS
+#define LED_DELAY_MS 1000
+#endif
+
+// Perform initialisation
+int pico_led_init(void) {
+    // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
+    // so we can use normal GPIO functionality to turn the led on and off
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+    return PICO_OK;
+}
+
+// Turn the led on or off
+void pico_set_led(bool led_on) {
+    gpio_put(PICO_DEFAULT_LED_PIN, led_on);
+}
+
+int main() {
+    stdio_init_all();
+    int rc = pico_led_init();
+    hard_assert(rc == PICO_OK);
+    while (true) {
+        printf("Hejka!\n");
+        funkcja(true);
+        sleep_ms(LED_DELAY_MS);
+        funkcja(false);
+        sleep_ms(LED_DELAY_MS);
+    }
+}
