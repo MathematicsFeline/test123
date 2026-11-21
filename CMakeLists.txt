@@ -38,6 +38,7 @@ pico_sdk_init()
 add_executable(blink 
     blink.c
     tester.c
+    plus.cpp
     )
 
 # pull in common dependencies
